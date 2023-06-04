@@ -1,6 +1,6 @@
 data/
 .ipynb_checkpoints
-models/*
+models/*s
 mlruns/*
 .vscode/
 ./DS_Store
