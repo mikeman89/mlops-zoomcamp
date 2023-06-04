@@ -1,15 +1,14 @@
 import pathlib
 import pickle
-
-import mlflow
-import numpy as np
 import pandas as pd
+import numpy as np
 import scipy
 import sklearn
-import xgboost as xgb
-from prefect import flow, task
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.metrics import mean_squared_error
+import mlflow
+import xgboost as xgb
+from prefect import flow, task
 
 
 @task(retries=3, retry_delay_seconds=2)
