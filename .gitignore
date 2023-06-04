@@ -1,9 +1,8 @@
-data/
 .ipynb_checkpoints
 .bin
 *.db
 
-*.parquet
+
 *.html
 *.csv
 
