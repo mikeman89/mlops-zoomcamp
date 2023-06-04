@@ -6,6 +6,3 @@ mlruns/*
 ./DS_Store
 *.db
 *.DS_Store
-.prefectignore
-deployment.yaml
-prefect.yaml
