@@ -51,7 +51,7 @@ View the results in the UI.
 What’s the final RMSE to five decimal places?
 
 - 6.67433
-- 5.19931
+- 5.19931 - this is the right one
 - 8.89443
 - 9.12250
 
