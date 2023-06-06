@@ -1,17 +1,18 @@
 import pathlib
 import pickle
-import pandas as pd
+from datetime import date
+
+import mlflow
 import numpy as np
+import pandas as pd
 import scipy
 import sklearn
-from sklearn.feature_extraction import DictVectorizer
-from sklearn.metrics import mean_squared_error
-import mlflow
 import xgboost as xgb
 from prefect import flow, task
-from prefect_aws import S3Bucket
 from prefect.artifacts import create_markdown_artifact
-from datetime import date
+from prefect_aws import S3Bucket
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.metrics import mean_squared_error
 
 
 @task(retries=3, retry_delay_seconds=2)
@@ -142,8 +143,8 @@ def main_flow_s3(
     mlflow.set_experiment("nyc-taxi-experiment")
 
     # Load
-    s3_bucket_block = S3Bucket.load("s3-bucket-block")
-    s3_bucket_block.download_folder_to_path(from_folder="data", to_folder="data")
+    s3_bucket_block = S3Bucket.load("s3-bucket-example")
+    s3_bucket_block.download_folder_to_path(from_folder="data2", to_folder="data")
 
     df_train = read_data(train_path)
     df_val = read_data(val_path)

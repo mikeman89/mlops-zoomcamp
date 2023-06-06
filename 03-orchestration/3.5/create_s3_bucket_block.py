@@ -1,10 +1,25 @@
+import os
+from json import load
+from pathlib import Path
 from time import sleep
-from prefect_aws import S3Bucket, AwsCredentials
+
+import dotenv
+from prefect_aws import AwsCredentials, S3Bucket
+
+
+def load_dotenv():
+    env_path = (
+        Path("/Users/michaelaltork/Documents/Coding Stuff/mlops-zoomcamp") / ".env"
+    )
+    dotenv.load_dotenv(dotenv_path=env_path)
 
 
 def create_aws_creds_block():
+    load_dotenv()
+    access_key = os.getenv("AWS_ACCESS_KEY")
+    secret_key = os.getenv("AWS_SECRET_KEY")
     my_aws_creds_obj = AwsCredentials(
-        aws_access_key_id="123abc", aws_secret_access_key="abc123"
+        aws_access_key_id=access_key, aws_secret_access_key=secret_key
     )
     my_aws_creds_obj.save(name="my-aws-creds", overwrite=True)
 
@@ -12,7 +27,7 @@ def create_aws_creds_block():
 def create_s3_bucket_block():
     aws_creds = AwsCredentials.load("my-aws-creds")
     my_s3_bucket_obj = S3Bucket(
-        bucket_name="my-first-bucket-abc", credentials=aws_creds
+        bucket_name="mlops-zoomcamp-bucket", credentials=aws_creds
     )
     my_s3_bucket_obj.save(name="s3-bucket-example", overwrite=True)
 
