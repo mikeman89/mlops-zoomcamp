@@ -14,7 +14,7 @@ How can you specify a task name?
 > Hint: look in the docs at https://docs.prefect.io or 
 > check out the doc string in a code editor.
 
-- `@task(retries=3, retry_delay_seconds=2, name="Read taxi data")`
+- `@task(retries=3, retry_delay_seconds=2, name="Read taxi data")` - this is the right one
 - `@task(retries=3, retry_delay_seconds=2, task_name="Read taxi data")`
 - `@task(retries=3, retry_delay_seconds=2, task-name="Read taxi data")`
 - `@task(retries=3, retry_delay_seconds=2, task_name_function=lambda x: f"Read taxi data")`
@@ -28,7 +28,7 @@ Using the flow in `orchestrate.py`, create a deployment.
 Schedule your deployment to run on the third day of every month at 9am UTC.
 What’s the cron schedule for that?
 
-- `0 9 3 * *`
+- `0 9 3 * *` - this is the right one
 - `0 0 9 3 *`
 - `9 * 3 0 *`
 - `* * 9 3 0`
