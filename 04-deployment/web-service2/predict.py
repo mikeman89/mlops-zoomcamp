@@ -1,9 +1,19 @@
-import pickle
+import os
 
+import mlflow
 from flask import Flask, jsonify, request
 
-with open("lin_reg.bin", "rb") as f_in:
-    (dv, model) = pickle.load(f_in)
+RUN_ID = os.getenv("RUN_ID")
+# RUN_ID = "fcd3850afce44e29a7e50a4945a1fda5"
+# TRACKING_URI = "sqlite:///mlflow.db"
+
+# mlflow.set_tracking_uri(TRACKING_URI)
+# mlflow.set_experiment("green-taxi-duration")
+
+logged_model = f"/Users/michaelaltork/Documents/Coding Stuff/mlops-zoomcamp/04-deployment/web-service2/mlruns/1/{RUN_ID}/artifacts/model"
+
+# Load model as a PyFuncModel.
+model = mlflow.pyfunc.load_model(logged_model)
 
 
 def prepare_features(ride):
@@ -14,8 +24,8 @@ def prepare_features(ride):
 
 
 def predict(features):
-    X = dv.transform(features)
-    preds = model.predict(X)
+    # X = dv.transform(features) not needed as model is a pipeline of cv & rf
+    preds = model.predict(features)
     return float(preds[0])
 
 
@@ -28,7 +38,7 @@ def predict_endpoint():
     features = prepare_features(ride)
     pred = predict(features)
 
-    result = {"duration": pred}
+    result = {"duration": pred, "model_version": RUN_ID}
 
     return jsonify(result)
 

@@ -1,0 +1,6 @@
+artifact_location: file:///Users/michaelaltork/Documents/Coding%20Stuff/mlops-zoomcamp/04-deployment/web-service2/mlruns/119409118695033990
+creation_time: 1687028848565
+experiment_id: '119409118695033990'
+last_update_time: 1687028848565
+lifecycle_stage: active
+name: green-taxi-duration
