@@ -14,7 +14,7 @@ Run this notebook for the February 2022 data.
 
 What's the standard deviation of the predicted duration for this dataset?
 
-* 5.28
+* 5.28 - this is the answer
 * 10.28
 * 15.28
 * 20.28
@@ -48,7 +48,7 @@ What's the size of the output file?
 * 28M
 * 38M
 * 48M
-* 58M
+* 58M - this is the answer
 
 __Note:__ Make sure you use the snippet above for saving the file. It should contain only these two columns. For this question, don't change the
 dtypes of the columns and use pyarrow, not fastparquet. 
@@ -59,6 +59,8 @@ dtypes of the columns and use pyarrow, not fastparquet.
 Now let's turn the notebook into a script. 
 
 Which command you need to execute for that?
+
+jupyter nbconvert --to script starter.ipynb
 
 
 ## Q4. Virtual environment
@@ -74,6 +76,10 @@ dependencies we use for the virtual env.
 
 What's the first hash for the Scikit-Learn dependency?
 
+"scikit-learn": {
+            "hashes": [
+                "sha256:065e9673e24e0dc5113e2dd2b4ca30c9d8aa2fa90f4c0597241c93b63130d233",]
+}
 
 ## Q5. Parametrize the script
 
@@ -85,7 +91,7 @@ Run the script for March 2022.
 What's the mean predicted duration? 
 
 * 7.76
-* 12.76
+* 12.76 - this is the answer
 * 17.76
 * 22.76
 
@@ -130,7 +136,7 @@ for April 2022?
 
 
 * 7.92
-* 12.83
+* 12.83 - this is the answer
 * 17.92
 * 22.83
 

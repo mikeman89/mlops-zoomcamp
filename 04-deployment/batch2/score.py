@@ -9,7 +9,7 @@ from typing import Optional
 import mlflow
 import pandas as pd
 from dateutil.relativedelta import relativedelta
-from prefect import flow, task
+from prefect import flow, get_run_logger, task
 from prefect.context import get_run_context
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.feature_extraction import DictVectorizer
@@ -54,18 +54,7 @@ def load_model(run_id):
     return model
 
 
-def apply_model(input_file, run_id, output_file):
-    print(f"reading data from {input_file}....")
-    df = read_dataframe(input_file)
-    dicts = prepare_dictionaries(df)
-
-    print(f"loading the model with RUN_ID: {run_id}....")
-    model = load_model(run_id)
-
-    print("applying the model...")
-    y_pred = model.predict(dicts)
-
-    print(f"saving the results to {output_file}")
+def save_results(df, y_pred, run_id, output_file):
     df_result = pd.DataFrame()
     df_result["ride_id"] = df["ride_id"]
     df_result["lpep_pickup_datetime"] = df["lpep_pickup_datetime"]
@@ -79,6 +68,25 @@ def apply_model(input_file, run_id, output_file):
     df_result.to_parquet(output_file, index=False)
 
 
+@task
+def apply_model(input_file, run_id, output_file):
+    logger = get_run_logger()
+
+    logger.info(f"reading data from {input_file}....")
+    df = read_dataframe(input_file)
+    dicts = prepare_dictionaries(df)
+
+    logger.info(f"loading the model with RUN_ID: {run_id}....")
+    model = load_model(run_id)
+
+    logger.info("applying the model...")
+    y_pred = model.predict(dicts)
+
+    logger.info(f"saving the results to {output_file}")
+    save_results(df, y_pred, run_id, output_file)
+    return output_file
+
+
 @flow
 def ride_duration_prediction(
     taxi_type: str, run_id: str, run_date: Optional[datetime] = None
@@ -87,16 +95,19 @@ def ride_duration_prediction(
         ctx = get_run_context()
         run_date = ctx.flow_run.expected_start_time
 
-    print(run_date)
+    input_file, output_file = get_paths(run_date, taxi_type, run_id)
+
+    apply_model(input_file, run_id, output_file)
+
+
+def get_paths(run_date, taxi_type, run_id):
     prev_month = run_date - relativedelta(months=1)
-    print(prev_month, prev_month.month, prev_month.year)
     year = prev_month.year
     month = prev_month.month
 
     output_file = f"output/{taxi_type}/tripdata_{year:04d}-{month:02d}.parquet"
     input_file = f"https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_{year:04d}-{month:02d}.parquet"
-
-    apply_model(input_file, run_id, output_file)
+    return input_file, output_file
 
 
 def run():

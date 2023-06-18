@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e4261799266c4d777eac6b41e478d6ea70ef41108da01f172c4992aad274c137"
+            "sha256": "29656173fd855bf585f0af379e4494f4131cdf6dd43f5a5a67a77f88d11ffb1c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -1660,6 +1660,14 @@
             ],
             "markers": "python_version < '3.12' and platform_python_implementation == 'CPython'",
             "version": "==0.2.7"
+        },
+        "s3fs": {
+            "hashes": [
+                "sha256:2ca5de8dc18ad7ad350c0bd01aef0406aa5d0fff78a561f0f710f9d9858abdd0",
+                "sha256:91c1dfb45e5217bd441a7a560946fe865ced6225ff7eb0fb459fe6e601a95ed3"
+            ],
+            "index": "pypi",
+            "version": "==0.4.2"
         },
         "s3transfer": {
             "hashes": [
